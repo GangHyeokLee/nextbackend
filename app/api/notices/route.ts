@@ -1,4 +1,4 @@
-import { getNotices, postNotice } from "@/src/lib/notice-db";
+import { deleteNotice, getNotices, postNotice } from "@/src/lib/notice-db";
 import { NextRequest } from "next/server";
 
 export async function GET() {
@@ -7,7 +7,7 @@ export async function GET() {
 
     return Response.json({ data });
   } catch (error) {
-
+    return Response.json({ error }, { status: 500 });
   }
 }
 
@@ -19,6 +19,20 @@ export async function POST(request: NextRequest) {
     return Response.json({ data });
 
   } catch (error) {
-    return Response.json({ error });
+    return Response.json({ error }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = await request.nextUrl;
+    const _id = searchParams.get("_id");
+    if (!_id) {
+      throw new Error('missing_id');
+    }
+    const data = await deleteNotice(_id);
+    return Response.json({ data });
+  } catch (error) {
+    return Response.json({ error }, { status: 500 });
   }
 }
