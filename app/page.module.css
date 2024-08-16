@@ -13,3 +13,10 @@
   color: black;
   cursor: pointer;
 }
+
+.container {
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
